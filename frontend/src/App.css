@@ -1,0 +1,242 @@
+/* App.css: all styles for the app. One plain stylesheet, no UI library. */
+/* Light background, white cards, readable fonts, works on a phone screen. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f3f4f6;
+  color: #111827;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.header h1 {
+  margin-bottom: 4px;
+  font-size: 1.6rem;
+}
+
+.header p {
+  margin-top: 0;
+  color: #4b5563;
+}
+
+/* White cards used throughout the page. */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* ---- Portfolio builder ---- */
+.builder-add {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.builder-add select {
+  flex: 1;
+  min-width: 180px;
+  padding: 8px;
+}
+
+button {
+  padding: 8px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+button:hover:not(:disabled) {
+  background-color: #eef2ff;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.holding-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.holding-ticker {
+  font-weight: 600;
+  width: 70px;
+}
+
+.holding-row input {
+  width: 90px;
+  padding: 6px;
+}
+
+.percent-sign {
+  color: #6b7280;
+}
+
+.analyze-button {
+  margin-top: 12px;
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  font-weight: 600;
+}
+
+.analyze-button:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.total-ok {
+  color: #047857;
+  font-weight: 600;
+}
+
+.total-bad {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.hint {
+  color: #6b7280;
+}
+
+/* ---- Period selector ---- */
+.period-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.period-active {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.period-info {
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+/* ---- Metric cards ---- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.metric-card {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 6px 0;
+}
+
+.metric-benchmark {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.excess-line {
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+/* ---- Charts ---- */
+.chart-card h3 {
+  margin-top: 0;
+}
+
+/* ---- Regression table ---- */
+.regression-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.regression-table th,
+.regression-table td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 8px;
+  text-align: right;
+}
+
+.regression-table th:first-child,
+.regression-table td:first-child {
+  text-align: left;
+}
+
+.table-note {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 10px;
+}
+
+/* ---- Insights ---- */
+.insights-text {
+  white-space: pre-wrap;
+  margin-top: 12px;
+}
+
+.disclaimer {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.error-text {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.warning-text {
+  color: #b45309;
+}
+
+/* ---- Footer ---- */
+.footer {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ---- Small screens ---- */
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 1.3rem;
+  }
+
+  .metric-value {
+    font-size: 1.25rem;
+  }
+}
