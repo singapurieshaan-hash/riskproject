@@ -1,10 +1,11 @@
 # llm.py: turns the already-calculated numbers into a plain-language explanation.
-# All Anthropic-specific code lives here so the provider can be swapped later.
+# All Gemini-specific code lives here so the provider can be swapped later.
 # The model is told to use ONLY the numbers we pass in; it must not calculate anything.
 
 import json
 
-from anthropic import Anthropic
+from google import genai
+from google.genai import types
 
 from app.config import LLM_API_KEY, LLM_MODEL
 
@@ -85,14 +86,20 @@ def generate_insights(analysis):
     payload_as_json_text = json.dumps(payload)
 
     try:
-        client = Anthropic(api_key=LLM_API_KEY)
-        response = client.messages.create(
-            model=LLM_MODEL,
-            max_tokens=800,
-            system=SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": payload_as_json_text}],
+        # Create a Gemini client using the API key.
+        client = genai.Client(api_key=LLM_API_KEY)
+
+        # The system prompt goes in a config object; the JSON payload is the user message.
+        config = types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            max_output_tokens=800,
         )
-        insights_text = response.content[0].text
+        response = client.models.generate_content(
+            model=LLM_MODEL,
+            contents=payload_as_json_text,
+            config=config,
+        )
+        insights_text = response.text
     except Exception as error:
         raise LLMUnavailable(str(error))
 

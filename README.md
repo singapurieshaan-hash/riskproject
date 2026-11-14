@@ -41,7 +41,7 @@ Market data (yfinance + FRED CSV)
    FastAPI backend  (backend/app) -- validation, metrics, CAPM regression, analysis
         |                                   |
         v                                   v
-   React dashboard (frontend)        LLM assistant (Anthropic)
+   React dashboard (frontend)        LLM assistant (Google Gemini)
 ```
 
 - **Data source:** `yfinance` for adjusted daily prices, FRED's `DTB3` CSV for the 3-month
@@ -75,8 +75,8 @@ Market data (yfinance + FRED CSV)
 - The analysis window for "N years" is measured back from the latest date in the database,
   not from today's calendar date.
 - The default portfolio name is "My portfolio" when the user leaves it blank.
-- The LLM model name is read from `LLM_MODEL`; the example uses `claude-opus-5-5`. Set it to
-  a current model available on your Anthropic account.
+- The LLM model name is read from `LLM_MODEL`; the example uses `gemini-2.5-flash`. Set it to
+  a current model available on your Google Gemini (AI Studio) account.
 
 ## 5. Limitations
 
@@ -168,7 +168,7 @@ need a database or internet connection.
 | Database | PostgreSQL via `psycopg2-binary` (plain SQL, no ORM) |
 | Data & math | `pandas`, `numpy`, `statsmodels` |
 | Market data | `yfinance` (adjusted prices), FRED CSV (`DTB3` risk-free rate) |
-| LLM | Anthropic Python SDK (`anthropic`), model from `LLM_MODEL` |
+| LLM | Google Gen AI SDK (`google-genai`), model from `LLM_MODEL` |
 | Tests | `pytest`, `httpx` |
 | Frontend | React + Vite (plain JavaScript), `recharts`, one plain CSS file |
 | Hosting | Backend + Postgres on Render/Railway, frontend on Vercel |
