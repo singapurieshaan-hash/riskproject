@@ -16,11 +16,23 @@ You receive JSON containing portfolio metrics that were already calculated by co
 
 Rules:
 1. Use ONLY numbers that appear in the JSON. Never calculate, estimate, round differently, or invent any number.
-2. If something is not in the JSON, say it is not available.
-3. Do not give investment advice. Never tell the user to buy, sell, or hold anything.
-4. Write in plain language for a beginner. Briefly explain any finance term the first time you use it.
-5. Write exactly four short sections with these headings: Risk, Diversification, Drawdown, Benchmark comparison. Use 2 to 3 sentences each.
-6. End with one sentence reminding the reader that results are based on past data and do not predict the future."""
+2. Always quote the exact number from the JSON when you mention a metric (for example "annualized return of 13.0%").
+3. If something is not in the JSON, say it is not available.
+4. Do not give investment advice. Never tell the user to buy, sell, or hold anything. You MAY describe the portfolio's past profile (for example "historically strong risk-adjusted returns" or "highly concentrated"), but frame it as a description of the past, not a recommendation.
+5. Write in plain language for a beginner. The first time you use a finance term, briefly explain what it means in everyday words.
+6. Use the exact plain-text structure below. Use the headings exactly as written (in capitals, no "#" symbols). For the metric list, start each line with "- ". Do not use any other Markdown. Write complete sentences and finish every section.
+
+OVERALL SUMMARY
+Two or three sentences giving a plain-language read on the portfolio based on the numbers: how it performed versus the benchmark, how risky it was, and how concentrated it is. Do not say whether anyone should invest.
+
+EACH METRIC EXPLAINED
+Write one line per metric, each starting with "- ". For each, state the number from the JSON, say in one sentence what it means, and whether it is higher or lower than the SPY benchmark where a benchmark number is given. Cover, in this order: total return, annualized return, annualized volatility, Sharpe ratio, maximum drawdown, beta, and 1-day 95% VaR.
+
+DIVERSIFICATION
+Two or three sentences on concentration: the number of holdings, the largest holding and its weight, the combined weight of the top 3, and which sectors dominate.
+
+REMINDER
+One sentence reminding the reader that these results are based on past data and do not predict the future."""
 
 
 class LLMUnavailable(Exception):
@@ -88,19 +100,41 @@ def generate_insights(analysis):
     try:
         # Create a Gemini client using the API key.
         client = genai.Client(api_key=LLM_API_KEY)
-
-        # The system prompt goes in a config object; the JSON payload is the user message.
-        config = types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            max_output_tokens=800,
-        )
-        response = client.models.generate_content(
-            model=LLM_MODEL,
-            contents=payload_as_json_text,
-            config=config,
-        )
-        insights_text = response.text
+        insights_text = ask_gemini(client, payload_as_json_text)
     except Exception as error:
         raise LLMUnavailable(str(error))
 
     return insights_text
+
+
+def ask_gemini(client, user_text):
+    # Send one request to Gemini and return the answer text.
+    # max_output_tokens is generous so the full explanation is never cut off.
+    # thinking_budget=0 turns off Gemini 2.5's hidden "thinking" tokens, which
+    # otherwise eat the token budget and can truncate the visible answer.
+    # Some older models do not support the thinking setting, so if that specific
+    # call fails we try once more without it.
+    try:
+        config = types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            max_output_tokens=2000,
+            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        )
+        response = client.models.generate_content(
+            model=LLM_MODEL,
+            contents=user_text,
+            config=config,
+        )
+        return response.text
+    except Exception:
+        # Fall back to a plain request (no thinking setting) for models that reject it.
+        config = types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            max_output_tokens=2000,
+        )
+        response = client.models.generate_content(
+            model=LLM_MODEL,
+            contents=user_text,
+            config=config,
+        )
+        return response.text
