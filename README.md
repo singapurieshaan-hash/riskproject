@@ -10,20 +10,18 @@ adds up to 100%, and click **Analyze**. The app then shows performance and risk 
 regression table, and a plain-language explanation written by an LLM using only the
 numbers the code already calculated.
 
-**Live app:** _(add your deployed Vercel URL here)_
+**Live app:** [riskproject-one.vercel.app](https://riskproject-one.vercel.app/)
 
 ## 2. Screenshot
 
-_(Placeholder — add a real screenshot of the dashboard here once deployed.)_
+The supplied dashboard screenshot is a good choice for this section: it clearly shows the
+portfolio metrics, cumulative-return comparison against SPY, and the plain-language
+explanation prompt. The image itself was not available as a repository file to embed here;
+add it to the repository (for example, as `docs/images/dashboard.png`) and then include it
+with:
 
-```
-+-----------------------------------------------------------+
-|  Portfolio Risk & Performance Analytics                   |
-|  [ Build your portfolio ]  [ Analyze ]                    |
-|  [ Metric cards ... ]                                     |
-|  [ Cumulative chart ]   [ Drawdown chart ]                |
-|  [ Regression table ]   [ Explain my results ]           |
-+-----------------------------------------------------------+
+```markdown
+![Portfolio risk and performance dashboard](docs/images/dashboard.png)
 ```
 
 ## 3. Architecture
