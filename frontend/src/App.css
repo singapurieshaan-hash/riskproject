@@ -1,19 +1,31 @@
 /* App.css: all styles for the app. One plain stylesheet, no UI library. */
-/* Minimal design: off-white page, quiet cards, one restrained ink accent, */
-/* and careful typography. Works down to a phone-width screen. */
+/* Minimal but not monochrome: a calm off-white canvas, one indigo brand */
+/* accent, and semantic colours (green/red/amber) so findings read at a glance. */
 
 :root {
-  /* A small, deliberate palette. Change these to re-theme the whole app. */
-  --page-bg: #fbfbfa;        /* warm off-white */
+  /* ---- Canvas & ink ---- */
+  --page-bg: #f6f7f9;        /* cool off-white */
   --card-bg: #ffffff;
-  --ink: #1a1a1a;            /* near-black for text */
-  --ink-soft: #6b6b6b;       /* muted grey for secondary text */
-  --ink-faint: #9a9a9a;      /* faint grey for captions */
-  --line: #ececea;           /* hairline borders */
-  --accent: #1a1a1a;         /* the one accent: ink itself, kept minimal */
-  --good: #1f7a4d;
-  --bad: #b23b3b;
-  --warn: #9a6b1f;
+  --ink: #16181d;            /* near-black text */
+  --ink-soft: #5a6472;       /* secondary text */
+  --ink-faint: #9aa3b0;      /* captions */
+  --line: #e7e9ee;           /* hairline borders */
+
+  /* ---- Brand accent (indigo) ---- */
+  --accent: #4f46e5;
+  --accent-strong: #4338ca;
+  --accent-soft: #eef0fe;    /* tinted background wash */
+
+  /* ---- Semantic colours ---- */
+  --pos: #0f9d6e;            /* gains, good */
+  --pos-soft: #e7f6ef;
+  --neg: #d4453f;            /* losses, risk */
+  --neg-soft: #fcebea;
+  --warn: #c67a16;           /* caution */
+
+  /* ---- Elevation ---- */
+  --shadow-sm: 0 1px 2px rgba(22, 24, 29, 0.04), 0 1px 3px rgba(22, 24, 29, 0.06);
+  --shadow-md: 0 2px 6px rgba(22, 24, 29, 0.05), 0 8px 24px rgba(22, 24, 29, 0.06);
 }
 
 * {
@@ -30,77 +42,76 @@ body {
 }
 
 .page {
-  max-width: 840px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 56px 24px 80px;
+  padding: 48px 24px 80px;
 }
 
-/* ---- Header ---- */
+/* ---- Header: a tinted brand band ---- */
 .header {
-  margin-bottom: 44px;
+  background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-md);
 }
 
 .header h1 {
   margin: 0 0 8px;
-  font-size: 1.75rem;
-  font-weight: 600;
+  font-size: 1.7rem;
+  font-weight: 650;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
 .header p {
   margin: 0;
-  color: var(--ink-soft);
-  font-size: 1rem;
-  max-width: 60ch;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.98rem;
+  max-width: 58ch;
 }
 
-/* ---- Cards: quiet, hairline-separated blocks ---- */
+/* ---- Cards ---- */
 .card {
   background-color: var(--card-bg);
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 24px;
   margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
 }
 
-.card h2 {
-  margin: 0 0 18px;
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink-soft);
-}
-
+.card h2,
 .card h3 {
   margin: 0 0 18px;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.74rem;
+  font-weight: 650;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink-soft);
+  letter-spacing: 0.09em;
+  color: var(--accent);
 }
 
-/* ---- Buttons: flat, minimal, one accent ---- */
+/* ---- Buttons ---- */
 button {
   padding: 9px 16px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 9px;
   background-color: var(--card-bg);
   color: var(--ink);
   cursor: pointer;
   font-size: 0.9rem;
   font-family: inherit;
-  transition: background-color 0.12s ease, border-color 0.12s ease;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 
 button:hover:not(:disabled) {
-  border-color: var(--ink);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 button:disabled {
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
@@ -117,7 +128,7 @@ button:disabled {
   min-width: 200px;
   padding: 9px 12px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 9px;
   background-color: var(--card-bg);
   color: var(--ink);
   font-family: inherit;
@@ -128,12 +139,12 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 0;
+  padding: 11px 0;
   border-top: 1px solid var(--line);
 }
 
 .holding-ticker {
-  font-weight: 600;
+  font-weight: 650;
   width: 64px;
   font-variant-numeric: tabular-nums;
 }
@@ -148,6 +159,12 @@ button:disabled {
   text-align: right;
 }
 
+.holding-row input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
 .percent-sign {
   color: var(--ink-faint);
   margin-left: -6px;
@@ -159,29 +176,36 @@ button:disabled {
   color: var(--ink-soft);
 }
 
+.holding-row button:hover:not(:disabled) {
+  color: var(--neg);
+  border-color: var(--neg);
+}
+
 .analyze-button {
   margin-top: 20px;
   background-color: var(--accent);
   color: #ffffff;
   border-color: var(--accent);
-  font-weight: 500;
-  padding: 11px 22px;
+  font-weight: 550;
+  padding: 11px 24px;
+  box-shadow: var(--shadow-sm);
 }
 
 .analyze-button:hover:not(:disabled) {
-  background-color: #000000;
-  border-color: #000000;
+  background-color: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #ffffff;
 }
 
 .total-ok {
-  color: var(--good);
-  font-weight: 500;
+  color: var(--pos);
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
 .total-bad {
-  color: var(--bad);
-  font-weight: 500;
+  color: var(--neg);
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
@@ -199,9 +223,9 @@ button:disabled {
 }
 
 .period-selector span {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.09em;
   color: var(--ink-faint);
   margin-right: 4px;
 }
@@ -218,7 +242,9 @@ button:disabled {
 }
 
 .period-active:hover:not(:disabled) {
-  border-color: var(--accent);
+  background-color: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #ffffff;
 }
 
 .period-info {
@@ -230,56 +256,69 @@ button:disabled {
 /* ---- Metric cards ---- */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1px;
-  background-color: var(--line);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
 }
 
-/* Each metric is a cell in a seamless grid, separated by hairlines only. */
+/* Each metric is its own small card with an accent bar on the left edge. */
 .metric-card {
   background-color: var(--card-bg);
-  border: none;
-  border-radius: 0;
-  margin: 0;
-  padding: 20px;
-  text-align: left;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 18px 18px 16px;
+  box-shadow: var(--shadow-sm);
 }
 
 .metric-label {
   font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   color: var(--ink-faint);
 }
 
 .metric-value {
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 1.55rem;
+  font-weight: 650;
   letter-spacing: -0.02em;
   margin: 8px 0 4px;
   font-variant-numeric: tabular-nums;
 }
 
 .metric-benchmark {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
 }
 
+/* ---- Semantic tones: colour the number by whether it is good/bad ---- */
+.tone-positive {
+  color: var(--pos);
+}
+
+.tone-negative {
+  color: var(--neg);
+}
+
+.tone-neutral {
+  color: var(--ink);
+}
+
 .excess-line {
   margin: 0 0 28px;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
 }
 
+.excess-line span {
+  font-weight: 650;
+}
+
 /* ---- Charts ---- */
 .chart-card {
-  padding-bottom: 28px;
+  padding-bottom: 24px;
 }
 
 /* ---- Regression table ---- */
@@ -291,11 +330,11 @@ button:disabled {
 }
 
 .regression-table th {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--ink-faint);
-  font-weight: 600;
+  font-weight: 650;
 }
 
 .regression-table th,
@@ -305,18 +344,18 @@ button:disabled {
   text-align: right;
 }
 
-.regression-table thead th {
-  border-bottom: 1px solid var(--line);
-}
-
 .regression-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+.regression-table tbody tr:hover td {
+  background-color: var(--accent-soft);
 }
 
 .regression-table th:first-child,
 .regression-table td:first-child {
   text-align: left;
-  font-weight: 600;
+  font-weight: 650;
 }
 
 .table-note {
@@ -333,17 +372,24 @@ button:disabled {
   font-size: 0.95rem;
   line-height: 1.7;
   color: var(--ink);
+  background-color: var(--accent-soft);
+  border-radius: 10px;
+  padding: 18px 20px;
 }
 
 .disclaimer {
   font-size: 0.8rem;
   color: var(--ink-faint);
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
+/* ---- Status messages ---- */
 .error-text {
-  color: var(--bad);
+  color: var(--neg);
   font-size: 0.9rem;
+  background-color: var(--neg-soft);
+  border-radius: 9px;
+  padding: 10px 14px;
 }
 
 .warning-text {
@@ -354,7 +400,7 @@ button:disabled {
 
 /* ---- Footer ---- */
 .footer {
-  margin-top: 56px;
+  margin-top: 48px;
   padding-top: 20px;
   border-top: 1px solid var(--line);
   color: var(--ink-faint);
@@ -368,11 +414,15 @@ button:disabled {
 /* ---- Small screens ---- */
 @media (max-width: 600px) {
   .page {
-    padding: 36px 18px 56px;
+    padding: 28px 16px 56px;
+  }
+
+  .header {
+    padding: 24px 20px;
   }
 
   .header h1 {
-    font-size: 1.45rem;
+    font-size: 1.4rem;
   }
 
   .metric-value {

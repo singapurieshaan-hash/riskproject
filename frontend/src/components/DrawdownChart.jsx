@@ -27,8 +27,8 @@ function DrawdownChart({ data }) {
             type="monotone"
             dataKey="portfolio"
             name="Portfolio"
-            stroke="#1a1a1a"
-            strokeWidth={1.6}
+            stroke="#d4453f"
+            strokeWidth={2}
             dot={false}
             isAnimationActive={false}
           />
@@ -36,7 +36,7 @@ function DrawdownChart({ data }) {
             type="monotone"
             dataKey="benchmark"
             name="SPY"
-            stroke="#b0b0ac"
+            stroke="#9aa3b0"
             strokeWidth={1.6}
             dot={false}
             isAnimationActive={false}
