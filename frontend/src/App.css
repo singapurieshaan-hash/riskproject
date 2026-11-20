@@ -1,5 +1,20 @@
 /* App.css: all styles for the app. One plain stylesheet, no UI library. */
-/* Light background, white cards, readable fonts, works on a phone screen. */
+/* Minimal design: off-white page, quiet cards, one restrained ink accent, */
+/* and careful typography. Works down to a phone-width screen. */
+
+:root {
+  /* A small, deliberate palette. Change these to re-theme the whole app. */
+  --page-bg: #fbfbfa;        /* warm off-white */
+  --card-bg: #ffffff;
+  --ink: #1a1a1a;            /* near-black for text */
+  --ink-soft: #6b6b6b;       /* muted grey for secondary text */
+  --ink-faint: #9a9a9a;      /* faint grey for captions */
+  --line: #ececea;           /* hairline borders */
+  --accent: #1a1a1a;         /* the one accent: ink itself, kept minimal */
+  --good: #1f7a4d;
+  --bad: #b23b3b;
+  --warn: #9a6b1f;
+}
 
 * {
   box-sizing: border-box;
@@ -7,35 +22,86 @@
 
 body {
   margin: 0;
-  background-color: #f3f4f6;
-  color: #111827;
+  background-color: var(--page-bg);
+  color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 .page {
-  max-width: 960px;
+  max-width: 840px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 56px 24px 80px;
+}
+
+/* ---- Header ---- */
+.header {
+  margin-bottom: 44px;
 }
 
 .header h1 {
-  margin-bottom: 4px;
-  font-size: 1.6rem;
+  margin: 0 0 8px;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .header p {
-  margin-top: 0;
-  color: #4b5563;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  max-width: 60ch;
 }
 
-/* White cards used throughout the page. */
+/* ---- Cards: quiet, hairline-separated blocks ---- */
 .card {
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  margin: 0 0 18px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+.card h3 {
+  margin: 0 0 18px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+
+/* ---- Buttons: flat, minimal, one accent ---- */
+button {
+  padding: 9px 16px;
+  border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
+  background-color: var(--card-bg);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 /* ---- Portfolio builder ---- */
@@ -43,78 +109,85 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
 
 .builder-add select {
   flex: 1;
-  min-width: 180px;
-  padding: 8px;
-}
-
-button {
-  padding: 8px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background-color: #f9fafb;
-  cursor: pointer;
-  font-size: 0.95rem;
-}
-
-button:hover:not(:disabled) {
-  background-color: #eef2ff;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  min-width: 200px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.9rem;
 }
 
 .holding-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
 }
 
 .holding-ticker {
   font-weight: 600;
-  width: 70px;
+  width: 64px;
+  font-variant-numeric: tabular-nums;
 }
 
 .holding-row input {
-  width: 90px;
-  padding: 6px;
+  width: 88px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  text-align: right;
 }
 
 .percent-sign {
-  color: #6b7280;
+  color: var(--ink-faint);
+  margin-left: -6px;
+}
+
+.holding-row button {
+  margin-left: auto;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
 }
 
 .analyze-button {
-  margin-top: 12px;
-  background-color: #2563eb;
+  margin-top: 20px;
+  background-color: var(--accent);
   color: #ffffff;
-  border-color: #2563eb;
-  font-weight: 600;
+  border-color: var(--accent);
+  font-weight: 500;
+  padding: 11px 22px;
 }
 
 .analyze-button:hover:not(:disabled) {
-  background-color: #1d4ed8;
+  background-color: #000000;
+  border-color: #000000;
 }
 
 .total-ok {
-  color: #047857;
-  font-weight: 600;
+  color: var(--good);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 .total-bad {
-  color: #b91c1c;
-  font-weight: 600;
+  color: var(--bad);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 .hint {
-  color: #6b7280;
+  color: var(--ink-faint);
+  font-size: 0.9rem;
 }
 
 /* ---- Period selector ---- */
@@ -122,121 +195,187 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 28px;
+}
+
+.period-selector span {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  margin-right: 4px;
+}
+
+.period-selector button {
+  padding: 6px 14px;
+  font-size: 0.85rem;
 }
 
 .period-active {
-  background-color: #2563eb;
+  background-color: var(--accent);
   color: #ffffff;
-  border-color: #2563eb;
+  border-color: var(--accent);
+}
+
+.period-active:hover:not(:disabled) {
+  border-color: var(--accent);
 }
 
 .period-info {
-  color: #4b5563;
-  font-size: 0.9rem;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  margin: 0 0 24px;
 }
 
 /* ---- Metric cards ---- */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background-color: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
 }
 
+/* Each metric is a cell in a seamless grid, separated by hairlines only. */
 .metric-card {
-  margin-bottom: 0;
-  text-align: center;
+  background-color: var(--card-bg);
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 20px;
+  text-align: left;
 }
 
 .metric-label {
-  font-size: 0.85rem;
-  color: #6b7280;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
 }
 
 .metric-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 6px 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 8px 0 4px;
+  font-variant-numeric: tabular-nums;
 }
 
 .metric-benchmark {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
 }
 
 .excess-line {
-  margin-top: 12px;
-  font-weight: 600;
+  margin: 0 0 28px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---- Charts ---- */
-.chart-card h3 {
-  margin-top: 0;
+.chart-card {
+  padding-bottom: 28px;
 }
 
 /* ---- Regression table ---- */
 .regression-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.regression-table th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  font-weight: 600;
 }
 
 .regression-table th,
 .regression-table td {
-  border-bottom: 1px solid #e5e7eb;
-  padding: 8px;
+  border-bottom: 1px solid var(--line);
+  padding: 11px 8px;
   text-align: right;
+}
+
+.regression-table thead th {
+  border-bottom: 1px solid var(--line);
+}
+
+.regression-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .regression-table th:first-child,
 .regression-table td:first-child {
   text-align: left;
+  font-weight: 600;
 }
 
 .table-note {
   font-size: 0.8rem;
-  color: #6b7280;
-  margin-top: 10px;
+  color: var(--ink-faint);
+  margin: 16px 0 0;
+  line-height: 1.5;
 }
 
 /* ---- Insights ---- */
 .insights-text {
   white-space: pre-wrap;
-  margin-top: 12px;
+  margin-top: 18px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ink);
 }
 
 .disclaimer {
   font-size: 0.8rem;
-  color: #6b7280;
-  font-style: italic;
+  color: var(--ink-faint);
+  margin-top: 16px;
 }
 
 .error-text {
-  color: #b91c1c;
-  font-weight: 600;
+  color: var(--bad);
+  font-size: 0.9rem;
 }
 
 .warning-text {
-  color: #b45309;
+  color: var(--warn);
+  font-size: 0.9rem;
+  margin: 0 0 16px;
 }
 
 /* ---- Footer ---- */
 .footer {
-  margin-top: 24px;
-  padding-top: 12px;
-  border-top: 1px solid #e5e7eb;
-  color: #6b7280;
-  font-size: 0.85rem;
-  text-align: center;
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-faint);
+  font-size: 0.82rem;
+}
+
+.footer p {
+  margin: 0;
 }
 
 /* ---- Small screens ---- */
 @media (max-width: 600px) {
+  .page {
+    padding: 36px 18px 56px;
+  }
+
   .header h1 {
-    font-size: 1.3rem;
+    font-size: 1.45rem;
   }
 
   .metric-value {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
   }
 }

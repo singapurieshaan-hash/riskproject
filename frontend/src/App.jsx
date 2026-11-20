@@ -99,15 +99,18 @@ function App() {
   return (
     <div className="page">
       <header className="header">
-        <h1>Portfolio Risk &amp; Performance Analytics</h1>
-        <p>Build a portfolio from US equities and compare it with the S&amp;P 500 (SPY).</p>
+        <h1>Portfolio Analytics</h1>
+        <p>
+          Build a portfolio from US equities and measure its risk and return against
+          the S&amp;P&nbsp;500.
+        </p>
       </header>
 
       <PortfolioBuilder securities={securities} onAnalyze={handleAnalyze} />
 
       {analysis && (
         <div className="period-selector">
-          <span>Period: </span>
+          <span>Period</span>
           {[1, 3, 5].map((option) => (
             <button
               key={option}

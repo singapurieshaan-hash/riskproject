@@ -11,7 +11,7 @@ function RegressionTable({ securities, holdings }) {
 
   return (
     <div className="card">
-      <h3>Per-stock CAPM regression</h3>
+      <h3>Per-stock regression</h3>
       <table className="regression-table">
         <thead>
           <tr>

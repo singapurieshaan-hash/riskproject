@@ -16,7 +16,7 @@ import { formatPercent } from '../format'
 function CumulativeChart({ data }) {
   return (
     <div className="card chart-card">
-      <h3>Cumulative return (portfolio vs SPY)</h3>
+      <h3>Cumulative return</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -28,7 +28,8 @@ function CumulativeChart({ data }) {
             type="monotone"
             dataKey="portfolio"
             name="Portfolio"
-            stroke="#2563eb"
+            stroke="#1a1a1a"
+            strokeWidth={1.6}
             dot={false}
             isAnimationActive={false}
           />
@@ -36,7 +37,8 @@ function CumulativeChart({ data }) {
             type="monotone"
             dataKey="benchmark"
             name="SPY"
-            stroke="#f59e0b"
+            stroke="#b0b0ac"
+            strokeWidth={1.6}
             dot={false}
             isAnimationActive={false}
           />

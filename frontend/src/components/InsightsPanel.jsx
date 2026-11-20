@@ -5,7 +5,7 @@
 function InsightsPanel({ insights, disclaimer, loading, error, onExplain }) {
   return (
     <div className="card">
-      <h3>Plain-language explanation</h3>
+      <h3>Explanation</h3>
 
       <button onClick={onExplain} disabled={loading}>
         Explain my results
