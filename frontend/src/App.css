@@ -398,6 +398,60 @@ button:disabled {
   margin: 0 0 16px;
 }
 
+/* ---- Side note: a small helper card fixed to the right edge ---- */
+.side-note {
+  position: fixed;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  width: 220px;
+  background-color: var(--accent-soft);
+  border: 1px solid #dcdffb;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+}
+
+.side-note-title {
+  font-size: 0.85rem;
+  font-weight: 650;
+  color: var(--accent-strong);
+  margin-bottom: 6px;
+}
+
+.side-note-text {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+
+.side-note-button {
+  width: 100%;
+  background-color: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 550;
+}
+
+.side-note-button:hover:not(:disabled) {
+  background-color: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #ffffff;
+}
+
+/* On narrow screens there is no room to float it, so show it inline instead. */
+@media (max-width: 1200px) {
+  .side-note {
+    position: static;
+    transform: none;
+    width: auto;
+    margin: 0 0 20px;
+  }
+}
+
 /* ---- Footer ---- */
 .footer {
   margin-top: 48px;

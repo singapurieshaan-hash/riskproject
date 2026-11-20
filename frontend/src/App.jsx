@@ -1,7 +1,7 @@
 // App.jsx: the single page. It loads the stock list, lets the user build a
 // portfolio, runs the analysis, and shows the cards, charts, table, and insights.
 // It holds all the shared state and passes pieces down to the child components.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortfolio, getAnalysis, getInsights, getSecurities } from './api'
 import PortfolioBuilder from './components/PortfolioBuilder'
 import MetricsCards from './components/MetricsCards'
@@ -28,6 +28,9 @@ function App() {
   // Insights have their own loading and error state so they do not block the page.
   const [insightsLoading, setInsightsLoading] = useState(false)
   const [insightsError, setInsightsError] = useState('')
+
+  // A reference to the explanation panel, so the side note can scroll to it.
+  const explanationRef = useRef(null)
 
   // On first load, fetch the list of securities for the dropdown.
   useEffect(() => {
@@ -114,6 +117,17 @@ function App() {
     }
   }
 
+  // Called by the side note: smoothly scroll to the explanation panel and,
+  // if no explanation has been written yet, start generating one right away.
+  function goToExplanation() {
+    if (explanationRef.current) {
+      explanationRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+    if (!insights && !insightsLoading) {
+      handleExplain()
+    }
+  }
+
   return (
     <div className="page">
       <header className="header">
@@ -171,14 +185,31 @@ function App() {
             holdings={analysis.portfolio.holdings}
           />
 
-          <InsightsPanel
-            insights={insights}
-            disclaimer={insightsDisclaimer}
-            loading={insightsLoading}
-            error={insightsError}
-            onExplain={handleExplain}
-          />
+          <div ref={explanationRef}>
+            <InsightsPanel
+              insights={insights}
+              disclaimer={insightsDisclaimer}
+              loading={insightsLoading}
+              error={insightsError}
+              onExplain={handleExplain}
+            />
+          </div>
         </div>
+      )}
+
+      {/* A small helper note fixed to the side of the screen. It only appears */}
+      {/* once results exist, and points beginners to the plain-language */}
+      {/* explanation lower on the page. */}
+      {analysis && !loading && (
+        <aside className="side-note">
+          <div className="side-note-title">New to these terms?</div>
+          <p className="side-note-text">
+            Get a plain-language explanation of your results, written in simple words.
+          </p>
+          <button className="side-note-button" onClick={goToExplanation}>
+            Explain my results ↓
+          </button>
+        </aside>
       )}
 
       <footer className="footer">
