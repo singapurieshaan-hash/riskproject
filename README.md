@@ -14,15 +14,8 @@ numbers the code already calculated.
 
 ## 2. Screenshot
 
-The supplied dashboard screenshot is a good choice for this section: it clearly shows the
-portfolio metrics, cumulative-return comparison against SPY, and the plain-language
-explanation prompt. The image itself was not available as a repository file to embed here;
-add it to the repository (for example, as `docs/images/dashboard.png`) and then include it
-with:
+<img width="1917" height="1003" alt="image" src="https://github.com/user-attachments/assets/7dfdb2fe-25aa-44f6-87ab-6bf2bbd5d590" />
 
-```markdown
-![Portfolio risk and performance dashboard](docs/images/dashboard.png)
-```
 
 ## 3. Architecture
 
