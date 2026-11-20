@@ -366,15 +366,37 @@ button:disabled {
 }
 
 /* ---- Insights ---- */
-.insights-text {
-  white-space: pre-wrap;
+.insights-body {
   margin-top: 18px;
   font-size: 0.95rem;
   line-height: 1.7;
   color: var(--ink);
   background-color: var(--accent-soft);
   border-radius: 10px;
-  padding: 18px 20px;
+  padding: 18px 22px;
+}
+
+/* Section titles like "OVERALL SUMMARY", shown bold in the accent colour. */
+.insights-heading {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-strong);
+  margin: 20px 0 8px;
+}
+
+.insights-heading:first-child {
+  margin-top: 0;
+}
+
+.insights-paragraph {
+  margin: 0 0 10px;
+}
+
+.insights-bullet {
+  margin: 0 0 8px 20px;
+  padding-left: 4px;
 }
 
 .disclaimer {

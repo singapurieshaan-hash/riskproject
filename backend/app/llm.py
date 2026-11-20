@@ -20,13 +20,21 @@ Rules:
 3. If something is not in the JSON, say it is not available.
 4. Do not give investment advice. Never tell the user to buy, sell, or hold anything. You MAY describe the portfolio's past profile (for example "historically strong risk-adjusted returns" or "highly concentrated"), but frame it as a description of the past, not a recommendation.
 5. Write in plain language for a beginner. The first time you use a finance term, briefly explain what it means in everyday words.
-6. Use the exact plain-text structure below. Use the headings exactly as written (in capitals, no "#" symbols). For the metric list, start each line with "- ". Do not use any other Markdown. Write complete sentences and finish every section.
+6. Never show raw JSON field names (for example never write "var_95_1day_pct"). Always use the friendly names given below. Write percentage values with a "%" sign (for example "56.79%"), not the word "percent".
+7. Use the exact plain-text structure below. Write each heading on its own line, in capitals, exactly as written, with no "#" or "*" symbols. For the metric list, start each line with "- ". Do not use any other Markdown. Write complete sentences and finish every section.
 
 OVERALL SUMMARY
 Two or three sentences giving a plain-language read on the portfolio based on the numbers: how it performed versus the benchmark, how risky it was, and how concentrated it is. Do not say whether anyone should invest.
 
 EACH METRIC EXPLAINED
-Write one line per metric, each starting with "- ". For each, state the number from the JSON, say in one sentence what it means, and whether it is higher or lower than the SPY benchmark where a benchmark number is given. Cover, in this order: total return, annualized return, annualized volatility, Sharpe ratio, maximum drawdown, beta, and 1-day 95% VaR.
+Write one line per metric, each starting with "- ". Begin each line with the friendly metric name followed by its value, then a short explanation, then how it compares with SPY. Use these exact friendly names, in this order:
+- Total return
+- Annualized return
+- Annualized volatility
+- Sharpe ratio
+- Maximum drawdown
+- Beta (the benchmark SPY always has a beta of 1.00, so compare against 1.00)
+- 1-day 95% VaR (there is no benchmark value for this, so just explain what it means, do not say it is unavailable)
 
 DIVERSIFICATION
 Two or three sentences on concentration: the number of holdings, the largest holding and its weight, the combined weight of the top 3, and which sectors dominate.
@@ -47,6 +55,13 @@ def to_pct(value):
     return round(value * 100, 2)
 
 
+def round2(value):
+    # Round a plain ratio (like a Sharpe ratio or beta) to 2 decimals, keeping None.
+    if value is None:
+        return None
+    return round(value, 2)
+
+
 def build_llm_payload(analysis):
     # Build a small JSON payload where percentages are already converted,
     # so the model never has to do any math itself.
@@ -65,16 +80,16 @@ def build_llm_payload(analysis):
             "total_return_pct": to_pct(portfolio_metrics["total_return"]),
             "annualized_return_pct": to_pct(portfolio_metrics["annualized_return"]),
             "annualized_volatility_pct": to_pct(portfolio_metrics["annualized_volatility"]),
-            "sharpe_ratio": portfolio_metrics["sharpe_ratio"],
+            "sharpe_ratio": round2(portfolio_metrics["sharpe_ratio"]),
             "max_drawdown_pct": to_pct(portfolio_metrics["max_drawdown"]),
-            "beta": portfolio_metrics["beta"],
+            "beta": round2(portfolio_metrics["beta"]),
             "var_95_1day_pct": to_pct(portfolio_metrics["var_95_1day"]),
         },
         "benchmark_SPY": {
             "total_return_pct": to_pct(benchmark_metrics["total_return"]),
             "annualized_return_pct": to_pct(benchmark_metrics["annualized_return"]),
             "annualized_volatility_pct": to_pct(benchmark_metrics["annualized_volatility"]),
-            "sharpe_ratio": benchmark_metrics["sharpe_ratio"],
+            "sharpe_ratio": round2(benchmark_metrics["sharpe_ratio"]),
             "max_drawdown_pct": to_pct(benchmark_metrics["max_drawdown"]),
         },
         "excess_annualized_return_pct": to_pct(analysis["comparison"]["excess_annualized_return"]),
