@@ -12,6 +12,9 @@ import InsightsPanel from './components/InsightsPanel'
 
 const DISCLAIMER = 'This is educational analysis based on historical data, not investment advice.'
 
+// The key (name) used to store the last portfolio id in the browser.
+const SAVED_PORTFOLIO_KEY = 'portfolioId'
+
 function App() {
   const [securities, setSecurities] = useState([])
   const [analysis, setAnalysis] = useState(null)
@@ -37,6 +40,19 @@ function App() {
       }
     }
     loadSecurities()
+  }, [])
+
+  // On first load, read the saved portfolio id from the browser (getItem).
+  // If one is there, restore it and run the analysis so the last results return.
+  useEffect(() => {
+    const savedId = localStorage.getItem(SAVED_PORTFOLIO_KEY)
+    if (savedId) {
+      const idAsNumber = Number(savedId)
+      setPortfolioId(idAsNumber)
+      runAnalysis(idAsNumber, years)
+    }
+    // We only want this to run once, right when the page loads.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // When the period changes and we already have a portfolio, re-run the analysis.
@@ -72,6 +88,8 @@ function App() {
     try {
       const created = await createPortfolio('My portfolio', holdings)
       setPortfolioId(created.id)
+      // Save this id in the browser (setItem) so it survives a page reload.
+      localStorage.setItem(SAVED_PORTFOLIO_KEY, created.id)
       await runAnalysis(created.id, years)
     } catch (createError) {
       setError(createError.message)
